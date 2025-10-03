@@ -29,8 +29,11 @@ export default function Header() {
                 />
               </div>
               <div className="ml-3">
-                <h1 className="text-lg font-bold text-white">
-                  Spielgemeinschaft Snooker Neubrandenburg
+                <h1 className="text-sm sm:text-base md:text-lg font-bold text-white">
+                  <span className="hidden sm:inline">
+                    Spielgemeinschaft Snooker Neubrandenburg
+                  </span>
+                  <span className="sm:hidden">Snooker NB</span>
                 </h1>
               </div>
             </Link>

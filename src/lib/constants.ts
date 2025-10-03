@@ -6,10 +6,10 @@
 import { ClubInfo, LegalInfo, NavigationItem, SEOInfo } from "./types";
 
 export const CLUB_INFO: ClubInfo = {
-  name: "Snooker Club NB",
-  address: "Musterstraße 123, 12345 Musterstadt",
+  name: "Snookerclub Neubrandenburg e.V.",
+  address: "Nonnenhofer Straße 60, 17033 Neubrandenburg",
   phone: "+49 123 456789",
-  email: "info@snooker-nb.de",
+  email: "snookertempel@gmail.com",
   website: "https://snooker-nb.de",
   description:
     "Ihr Snooker Club in der Region - für Anfänger und Profis. Wir bieten eine moderne Anlage mit mehreren Tischen und regelmäßige Turniere.",
@@ -17,12 +17,12 @@ export const CLUB_INFO: ClubInfo = {
 };
 
 export const LEGAL_INFO: LegalInfo = {
-  legalName: "Snooker Club NB e.V.",
-  address: "Musterstraße 123, 12345 Musterstadt",
+  legalName: "Snookerclub Neubrandenburg e.V.",
+  address: "Nonnenhofer Straße 60, 17033 Neubrandenburg",
   phone: "+49 123 456789",
-  email: "info@snooker-nb.de",
-  responsiblePerson: "Max Mustermann",
-  dataProtectionOfficer: "Max Mustermann",
+  email: "snookertempel@gmail.com",
+  responsiblePerson: "Marian Dubowski",
+  dataProtectionOfficer: "Marian Dubowski",
 };
 
 export const NAVIGATION_ITEMS: NavigationItem[] = [
