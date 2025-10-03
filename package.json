@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "vercel-build": "next build"
+    "vercel-build": "npm install && next build"
   },
   "dependencies": {
     "clsx": "^2.1.1",
