@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { LEGAL_INFO, CLUB_INFO } from "@/lib/constants";
+import { LEGAL_INFO } from "@/lib/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,12 +29,13 @@ export default function DatenschutzPage() {
                 <p className="text-gray-700">
                   Wir informieren Sie nachfolgend gemäß den gesetzlichen
                   Vorgaben des Datenschutzrechts (insb. gemäß BDSG n.F. und der
-                  europäischen Datenschutz-Grundverordnung ‚DS-GVO') über die
-                  Art, den Umfang und Zweck der Verarbeitung personenbezogener
-                  Daten durch unser Unternehmen. Diese Datenschutzerklärung gilt
-                  auch für unsere Websites und Sozial-Media-Profile. Bezüglich
-                  der Definition von Begriffen wie etwa „personenbezogene Daten"
-                  oder „Verarbeitung" verweisen wir auf Art. 4 DS-GVO.
+                  europäischen Datenschutz-Grundverordnung &apos;DS-GVO&apos;)
+                  über die Art, den Umfang und Zweck der Verarbeitung
+                  personenbezogener Daten durch unser Unternehmen. Diese
+                  Datenschutzerklärung gilt auch für unsere Websites und
+                  Sozial-Media-Profile. Bezüglich der Definition von Begriffen
+                  wie etwa &quot;personenbezogene Daten&quot; oder
+                  &quot;Verarbeitung&quot; verweisen wir auf Art. 4 DS-GVO.
                 </p>
               </section>
 
@@ -44,8 +45,8 @@ export default function DatenschutzPage() {
                   Name und Kontaktdaten des / der Verantwortlichen
                 </h2>
                 <p className="text-gray-700 mb-4">
-                  Unser/e Verantwortliche/r (nachfolgend „Verantwortlicher")
-                  i.S.d. Art. 4 Zif. 7 DS-GVO ist:
+                  Unser/e Verantwortliche/r (nachfolgend
+                  &quot;Verantwortlicher&quot;) i.S.d. Art. 4 Zif. 7 DS-GVO ist:
                 </p>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <p>
@@ -115,7 +116,7 @@ export default function DatenschutzPage() {
                     </p>
                     <p className="text-gray-700 mt-2">
                       Die betroffenen Personen werden zusammenfassend als
-                      „Nutzer" bezeichnet.
+                      &quot;Nutzer&quot; bezeichnet.
                     </p>
                   </div>
                 </div>
@@ -216,10 +217,10 @@ export default function DatenschutzPage() {
                   anerkannte Feststellung eines der EU entsprechenden
                   Datenschutzniveaus oder der Beachtung offiziell anerkannter
                   spezieller vertraglicher Verpflichtungen, der so genannten
-                  „Standardvertragsklauseln". Bei US-Unternehmen erfüllt die
-                  Unterwerfung unter das sog. „Privacy-Shield", dem
-                  Datenschutzabkommen zwischen der EU und den USA, diese
-                  Voraussetzungen.
+                  &quot;Standardvertragsklauseln&quot;. Bei US-Unternehmen
+                  erfüllt die Unterwerfung unter das sog.
+                  &quot;Privacy-Shield&quot;, dem Datenschutzabkommen zwischen
+                  der EU und den USA, diese Voraussetzungen.
                 </p>
               </section>
 
@@ -367,14 +368,14 @@ export default function DatenschutzPage() {
 
                 <div className="mt-4">
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Widerspruch und „Opt-Out":
+                    Widerspruch und &quot;Opt-Out&quot;:
                   </h3>
                   <p className="text-gray-700">
                     Das Speichern von Cookies auf Ihrer Festplatte können Sie
                     allgemein verhindern, indem Sie in Ihren
-                    Browser-Einstellungen „keine Cookies akzeptieren" wählen.
-                    Dies kann aber eine Funktionseinschränkung unserer Angebote
-                    zur Folge haben.
+                    Browser-Einstellungen &quot;keine Cookies akzeptieren&quot;
+                    wählen. Dies kann aber eine Funktionseinschränkung unserer
+                    Angebote zur Folge haben.
                   </p>
                 </div>
               </section>
@@ -457,8 +458,8 @@ export default function DatenschutzPage() {
                 </p>
                 <p className="text-gray-700 mb-4">
                   Wir können Ihre Angaben und Kontaktanfrage in unserem
-                  Customer-Relationship-Management System ("CRM System") oder
-                  einem vergleichbaren System speichern.
+                  Customer-Relationship-Management System (&quot;CRM
+                  System&quot;) oder einem vergleichbaren System speichern.
                 </p>
                 <p className="text-gray-700 mb-4">
                   Die Daten werden gelöscht, sobald sie für die Erreichung des
@@ -491,12 +492,13 @@ export default function DatenschutzPage() {
                   Google Maps
                 </h2>
                 <p className="text-gray-700 mb-4">
-                  Wir haben auf unserer Website Karten von „Google Maps" (Google
-                  Ireland Limited, Registernr.: 368047, Gordon House, Barrow
-                  Street, Dublin 4, Irland) integriert. Damit können wirden
-                  Standort von Adressen und eine Anfahrtsbeschreibung direkt auf
-                  unserer Website in interaktiven Karten anzeigen und Ihnen die
-                  Nutzung dieses Tools ermöglichen.
+                  Wir haben auf unserer Website Karten von &quot;Google
+                  Maps&quot; (Google Ireland Limited, Registernr.: 368047,
+                  Gordon House, Barrow Street, Dublin 4, Irland) integriert.
+                  Damit können wirden Standort von Adressen und eine
+                  Anfahrtsbeschreibung direkt auf unserer Website in
+                  interaktiven Karten anzeigen und Ihnen die Nutzung dieses
+                  Tools ermöglichen.
                 </p>
                 <p className="text-gray-700 mb-4">
                   Bei dem Abruf unserer Website, wo Google Maps integriert ist,

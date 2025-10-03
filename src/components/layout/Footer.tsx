@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CLUB_INFO, LEGAL_INFO } from "@/lib/constants";
 
 export default function Footer() {
   return (

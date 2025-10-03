@@ -111,9 +111,9 @@ export default function ImpressumPage() {
                     </h3>
                     <p className="text-gray-700">
                       Diese Website enthält Verknüpfungen zu Websites Dritter
-                      ("externe Links"). Diese Websites unterliegen der Haftung
-                      der jeweiligen Betreiber. Der Anbieter hat bei der
-                      erstmaligen Verknüpfung der externen Links die fremden
+                      (&quot;externe Links&quot;). Diese Websites unterliegen
+                      der Haftung der jeweiligen Betreiber. Der Anbieter hat bei
+                      der erstmaligen Verknüpfung der externen Links die fremden
                       Inhalte daraufhin überprüft, ob etwaige Rechtsverstöße
                       bestehen. Zu dem Zeitpunkt waren keine Rechtsverstöße
                       ersichtlich. Der Anbieter hat keinerlei Einfluss auf die

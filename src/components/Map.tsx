@@ -9,7 +9,28 @@ interface MapProps {
 // Google Maps Types
 declare global {
   interface Window {
-    google: any;
+    google: {
+      maps: {
+        Map: new (element: HTMLElement, options: Record<string, unknown>) => {
+          setCenter: (center: { lat: number; lng: number }) => void;
+          setZoom: (zoom: number) => void;
+        };
+        Marker: new (options: Record<string, unknown>) => {
+          setMap: (map: unknown) => void;
+        };
+        MapTypeId: {
+          ROADMAP: string;
+        };
+        Size: new (width: number, height: number) => {
+          width: number;
+          height: number;
+        };
+        Point: new (x: number, y: number) => {
+          x: number;
+          y: number;
+        };
+      };
+    };
     initMap?: () => void;
   }
 }
@@ -123,7 +144,7 @@ export default function Map({ className = "" }: MapProps) {
         delete window.initMap;
       }
     };
-  }, [isClient]);
+  }, [isClient, mapError, mapLoaded]);
 
   const initializeMap = () => {
     console.log("initializeMap aufgerufen");
