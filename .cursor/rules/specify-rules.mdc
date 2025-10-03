@@ -1,0 +1,40 @@
+# SnookerClubNB Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-10-03
+
+## Active Technologies
+
+- TypeScript/JavaScript, Next.js 15 + React 19, Tailwind CSS, Vercel (001-ich-m-chte)
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router
+├── components/            # React Komponenten
+├── lib/                  # Utilities
+└── styles/               # CSS/Tailwind
+
+public/
+├── images/               # Statische Bilder
+└── icons/                # Favicons
+
+tests/
+├── __tests__/            # Unit Tests
+└── integration/          # Integration Tests
+```
+
+## Commands
+
+npm test [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLOGIES] npm run lint
+
+## Code Style
+
+TypeScript/JavaScript, Next.js 15: Follow standard conventions
+
+## Recent Changes
+
+- 001-ich-m-chte: Added TypeScript/JavaScript, Next.js 15 + React 19, Tailwind CSS, Vercel
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
