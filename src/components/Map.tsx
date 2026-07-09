@@ -25,19 +25,13 @@ declare global {
           setCenter: (center: { lat: number; lng: number }) => void;
           setZoom: (zoom: number) => void;
         };
-        Marker: new (options: Record<string, unknown>) => {
-          setMap: (map: unknown) => void;
-        };
         MapTypeId: {
           ROADMAP: string;
         };
-        Size: new (width: number, height: number) => {
-          width: number;
-          height: number;
-        };
-        Point: new (x: number, y: number) => {
-          x: number;
-          y: number;
+        marker: {
+          AdvancedMarkerElement: new (options: Record<string, unknown>) => {
+            map: unknown;
+          };
         };
       };
     };
@@ -89,31 +83,33 @@ export default function Map({ className = "" }: MapProps) {
 
       console.log("Erstelle Karte mit Koordinaten:", { lat, lng });
 
+      const mapId =
+        process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID || "DEMO_MAP_ID";
+
       const map = new window.google.maps.Map(mapRef.current, {
         center: { lat, lng },
         zoom: 15,
+        mapId,
         mapTypeId: window.google.maps.MapTypeId.ROADMAP,
-        styles: [
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }],
-          },
-        ],
       });
 
       console.log("Karte erstellt:", map);
 
-      // Marker für den Snooker Club hinzufügen (klassischer Marker)
-      const marker = new window.google.maps.Marker({
+      // Marker-Content: Snooker-Ball, zentriert auf der Position
+      const markerImg = document.createElement("img");
+      markerImg.src = "/red-snooker-ball.png";
+      markerImg.width = 40;
+      markerImg.height = 40;
+      // AdvancedMarkerElement verankert unten-mittig; nach unten schieben
+      // damit der Ball auf den Koordinaten zentriert liegt
+      markerImg.style.transform = "translateY(50%)";
+
+      // Marker für den Snooker Club hinzufügen (AdvancedMarkerElement)
+      const marker = new window.google.maps.marker.AdvancedMarkerElement({
         position: { lat, lng },
         map: map,
         title: "Snooker Club NB",
-        icon: {
-          url: "/red-snooker-ball.png",
-          scaledSize: new window.google.maps.Size(40, 40),
-          anchor: new window.google.maps.Point(20, 20),
-        },
+        content: markerImg,
       });
 
       console.log("Marker erstellt:", marker);
@@ -179,7 +175,7 @@ export default function Map({ className = "" }: MapProps) {
 
     // Google Maps Script laden
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initMap&loading=async`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places,marker&callback=initMap&loading=async`;
     script.async = true;
     script.defer = true;
 
