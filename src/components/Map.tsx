@@ -1,6 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+
+const emptySubscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 interface MapProps {
   className?: string;
@@ -37,13 +47,95 @@ declare global {
 
 export default function Map({ className = "" }: MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useSyncExternalStore(
+    emptySubscribe,
+    getClientSnapshot,
+    getServerSnapshot
+  );
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    setIsClient(true);
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const apiKeyMissing = !apiKey || apiKey === "YOUR_GOOGLE_MAPS_API_KEY";
+  const displayError = apiKeyMissing
+    ? "Google Maps API Key ist nicht konfiguriert"
+    : mapError;
+
+  const initializeMap = useCallback(() => {
+    console.log("initializeMap aufgerufen");
+    console.log("mapRef.current:", mapRef.current);
+    console.log("window.google:", window.google);
+
+    if (!mapRef.current) {
+      console.error("mapRef.current ist null");
+      setMapError("Karten-Container nicht gefunden");
+      return;
+    }
+
+    if (!window.google || !window.google.maps) {
+      console.error("Google Maps API nicht verfügbar");
+      setMapError("Google Maps API nicht verfügbar");
+      return;
+    }
+
+    try {
+      const lat = parseFloat(
+        process.env.NEXT_PUBLIC_CLUB_LATITUDE || "52.520008"
+      );
+      const lng = parseFloat(
+        process.env.NEXT_PUBLIC_CLUB_LONGITUDE || "13.404954"
+      );
+
+      console.log("Erstelle Karte mit Koordinaten:", { lat, lng });
+
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: { lat, lng },
+        zoom: 15,
+        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
+        styles: [
+          {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: "off" }],
+          },
+        ],
+      });
+
+      console.log("Karte erstellt:", map);
+
+      // Marker für den Snooker Club hinzufügen (klassischer Marker)
+      const marker = new window.google.maps.Marker({
+        position: { lat, lng },
+        map: map,
+        title: "Snooker Club NB",
+        icon: {
+          url: "/red-snooker-ball.png",
+          scaledSize: new window.google.maps.Size(40, 40),
+          anchor: new window.google.maps.Point(20, 20),
+        },
+      });
+
+      console.log("Marker erstellt:", marker);
+      setMapLoaded(true);
+      console.log(
+        "Karte erfolgreich geladen - mapLoaded wird auf true gesetzt"
+      );
+
+      // Timeout löschen, da Karte erfolgreich geladen wurde
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+        console.log("Timeout gelöscht - Karte erfolgreich geladen");
+      }
+    } catch (error) {
+      console.error("Fehler beim Initialisieren der Karte:", error);
+      setMapError(
+        `Fehler beim Initialisieren der Karte: ${
+          error instanceof Error ? error.message : "Unbekannter Fehler"
+        }`
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -56,18 +148,16 @@ export default function Map({ className = "" }: MapProps) {
 
     if (!isClient || !mapRef.current) return;
 
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     console.log("API Key:", apiKey ? "vorhanden" : "fehlt");
 
-    if (!apiKey || apiKey === "YOUR_GOOGLE_MAPS_API_KEY") {
-      setMapError("Google Maps API Key ist nicht konfiguriert");
+    if (apiKeyMissing) {
       return;
     }
 
     // Prüfen ob Google Maps bereits geladen ist
     if (window.google && window.google.maps) {
-      initializeMap();
-      return;
+      const initTimeout = setTimeout(initializeMap, 0);
+      return () => clearTimeout(initTimeout);
     }
 
     // Prüfen ob Script bereits existiert
@@ -144,83 +234,7 @@ export default function Map({ className = "" }: MapProps) {
         delete window.initMap;
       }
     };
-  }, [isClient, mapError, mapLoaded]);
-
-  const initializeMap = () => {
-    console.log("initializeMap aufgerufen");
-    console.log("mapRef.current:", mapRef.current);
-    console.log("window.google:", window.google);
-
-    if (!mapRef.current) {
-      console.error("mapRef.current ist null");
-      setMapError("Karten-Container nicht gefunden");
-      return;
-    }
-
-    if (!window.google || !window.google.maps) {
-      console.error("Google Maps API nicht verfügbar");
-      setMapError("Google Maps API nicht verfügbar");
-      return;
-    }
-
-    try {
-      const lat = parseFloat(
-        process.env.NEXT_PUBLIC_CLUB_LATITUDE || "52.520008"
-      );
-      const lng = parseFloat(
-        process.env.NEXT_PUBLIC_CLUB_LONGITUDE || "13.404954"
-      );
-
-      console.log("Erstelle Karte mit Koordinaten:", { lat, lng });
-
-      const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat, lng },
-        zoom: 15,
-        mapTypeId: window.google.maps.MapTypeId.ROADMAP,
-        styles: [
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [{ visibility: "off" }],
-          },
-        ],
-      });
-
-      console.log("Karte erstellt:", map);
-
-      // Marker für den Snooker Club hinzufügen (klassischer Marker)
-      const marker = new window.google.maps.Marker({
-        position: { lat, lng },
-        map: map,
-        title: "Snooker Club NB",
-        icon: {
-          url: "/red-snooker-ball.png",
-          scaledSize: new window.google.maps.Size(40, 40),
-          anchor: new window.google.maps.Point(20, 20),
-        },
-      });
-
-      console.log("Marker erstellt:", marker);
-      setMapLoaded(true);
-      console.log(
-        "Karte erfolgreich geladen - mapLoaded wird auf true gesetzt"
-      );
-
-      // Timeout löschen, da Karte erfolgreich geladen wurde
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-        console.log("Timeout gelöscht - Karte erfolgreich geladen");
-      }
-    } catch (error) {
-      console.error("Fehler beim Initialisieren der Karte:", error);
-      setMapError(
-        `Fehler beim Initialisieren der Karte: ${
-          error instanceof Error ? error.message : "Unbekannter Fehler"
-        }`
-      );
-    }
-  };
+  }, [isClient, mapError, mapLoaded, apiKey, apiKeyMissing, initializeMap]);
 
   return (
     <div className={`relative ${className}`}>
@@ -251,7 +265,7 @@ export default function Map({ className = "" }: MapProps) {
       )}
 
       {/* Error Overlay */}
-      {mapError && (
+      {displayError && (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-red-50 rounded-lg border border-red-200">
           <div className="text-center">
             <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
@@ -268,13 +282,13 @@ export default function Map({ className = "" }: MapProps) {
               </svg>
             </div>
             <p className="text-red-600 font-medium">Kartenfehler</p>
-            <p className="text-sm text-red-500 mt-2">{mapError}</p>
+            <p className="text-sm text-red-500 mt-2">{displayError}</p>
           </div>
         </div>
       )}
 
       {/* Loading Overlay */}
-      {isClient && !mapLoaded && !mapError && (
+      {isClient && !mapLoaded && !displayError && (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gray-200 rounded-lg">
           <div className="text-center">
             <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
